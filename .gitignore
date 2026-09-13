@@ -1,0 +1,65 @@
+# Python Bytecode and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution and Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spark & Hadoop Artifacts
+metastore_db/
+derby.log
+checkpoint/
+checkpoints/
+.spark-staging/
+spark-warehouse/
+
+# Local Kafka / Spark Binaries & Extracted Folders
+kafka_*/
+spark-*/
+spark_*/
+
+# Data and Logs
+*.log
+logs/
+/tmp/output/
+output/
+*.csv
+
+# IDE and Editor Files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
