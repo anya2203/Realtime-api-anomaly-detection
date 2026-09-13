@@ -26,7 +26,8 @@ A real-time data streaming pipeline for detecting volumetric bot attacks and API
 - [Project Structure](#-project-structure)
 - [Setup & Prerequisites](#-setup--prerequisites)
 - [Execution Steps](#-execution-steps)
-- [Screenshots & Visual Results](#-screenshots--visual-results)
+- [Expected Output](#-expected-output)
+- [Screenshots](#-screenshots)
 - [Future Enhancements](#-future-enhancements)
 - [Contributors](#-contributors)
 - [License](#-license)
@@ -79,12 +80,7 @@ The architecture follows a decoupled stream-processing design divided into four 
 ```
 
 <p align="center">
-  <img src="screenshots/architecture_diagram.png" alt="Architecture Diagram" width="900" />
-</p>
-
-### Pipeline Methodology
-<p align="center">
-  <img src="screenshots/methodology_flowchart.png" alt="Methodology Flowchart" width="900" />
+  <img src="screenshots/architecture_diagram.png" alt="Streaming-Based API Anomaly Detection Architecture" width="850" />
 </p>
 
 ---
@@ -156,14 +152,10 @@ realtime-api-anomaly-detection/
 ├── dashboard.py                 # Streamlit monitoring dashboard script
 ├── requirements.txt             # Project Python dependencies
 ├── .gitignore                   # Ignore rules for environments, caches, and big data binaries
-├── screenshots/                 # Project figures, flowcharts, and execution screenshots
-│   ├── anomaly_detection_alert.png
+├── screenshots/                 # Essential figures and execution screenshots
 │   ├── architecture_diagram.png
-│   ├── consumer_stream.png
 │   ├── gradio_dashboard.png
-│   ├── kafka_topic_creation.png
-│   ├── methodology_flowchart.png
-│   └── producer_simulation.png
+│   └── anomaly_detection_alert.png
 └── README.md                    # Project documentation
 ```
 
@@ -218,7 +210,7 @@ bin/kafka-topics.sh --create --topic api_logs --bootstrap-server localhost:9092 
 
 ### Step 2: Start Traffic Simulation
 
-Launch the producer to generate real-time log traffic:
+Launch the producer to begin generating real-time log traffic:
 
 ```bash
 python producer.py
@@ -247,44 +239,62 @@ python gradio_app.py
 
 ---
 
-## 📸 Screenshots & Visual Results
+## 📋 Expected Output
+
+### Producer Console (`producer.py`)
+```text
+Sent: {'ip': '192.168.1.1', 'endpoint': '/login', 'timestamp': 1726248102.45}
+Sent: {'ip': '10.0.0.2', 'endpoint': '/login', 'timestamp': 1726248103.46}
+Sent: {'ip': '172.16.0.5', 'endpoint': '/login', 'timestamp': 1726248104.47}
+⚠️ ATTACK SIMULATION
+Sent: {'ip': 'ATTACKER', 'endpoint': '/login', 'timestamp': 1726248105.48}
+```
+
+### Consumer Analysis Window (`consumer.py`)
+```text
+Received: {'ip': '192.168.1.1', 'endpoint': '/login', 'timestamp': 1726248102.45}
+Received: {'ip': '10.0.0.2', 'endpoint': '/login', 'timestamp': 1726248103.46}
+
+--- ANALYSIS WINDOW ---
+192.168.1.1: 3 requests
+10.0.0.2: 2 requests
+172.16.0.5: 2 requests
+ATTACKER: 20 requests
+🚨 ALERT: Possible bot attack from ATTACKER
+-----------------------
+```
+
+### Spark Structured Streaming (`spark_stream.py`)
+```text
+-------------------------------------------
+Batch: 1
+-------------------------------------------
++-----------+-----+
+|         ip|count|
++-----------+-----+
+|  10.0.0.2|    2|
+|192.168.1.1|    3|
+| 172.16.0.5|    2|
+|   ATTACKER|   20|
++-----------+-----+
+```
+
+---
+
+## 📸 Screenshots
 
 ### 1. Gradio Live Attack Detection Dashboard
-Displays real-time request counts across all IP addresses and triggers an instant alert banner when the attack threshold is breached:
+Live tabular view of IP request counts with an instant alert banner triggered upon detecting a bot attack:
 <p align="center">
   <img src="screenshots/gradio_dashboard.png" alt="Gradio Dashboard Visualizing API Traffic and Detected Bot Attack" width="850" />
 </p>
 
 ---
 
-### 2. Real-Time Anomaly Detection in Analysis Window
-The consumer performs tumbling-window evaluations every 5 seconds, flagging the attack spike from `ATTACKER`:
+### 2. Real-Time Terminal Detection Window
+The tumbling window evaluates request rates every 5 seconds, flagging the attack spike from `ATTACKER`:
 <p align="center">
   <img src="screenshots/anomaly_detection_alert.png" alt="Real-Time Anomaly Detection Alert" width="750" />
-</p>
-
----
-
-### 3. Traffic Generation & Attack Simulation
-Log producer emitting regular `/login` requests and triggering volumetric attack simulation bursts:
-<p align="center">
-  <img src="screenshots/producer_simulation.png" alt="Python Producer Simulating Traffic and Attack" width="850" />
-</p>
-
----
-
-### 4. Real-Time Kafka Consumer Stream
-Continuous stream of incoming JSON log events consumed from the `api_logs` topic:
-<p align="center">
-  <img src="screenshots/consumer_stream.png" alt="Kafka Consumer Stream" width="800" />
-</p>
-
----
-
-### 5. Kafka Environment & Topic Initialization
-Kafka topic creation and PySpark environment setup:
-<p align="center">
-  <img src="screenshots/kafka_topic_creation.png" alt="Creation of Kafka Topic for Streaming API Logs" width="700" />
 </p>
 
 ---
