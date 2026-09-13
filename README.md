@@ -1,4 +1,4 @@
-# realtime-api-anomaly-detection
+# Realtime-api-anomaly-detection
 
 <p align="center">
   <strong>Real-Time API Anomaly & Volumetric Attack Detection Pipeline</strong>
@@ -17,7 +17,7 @@ A real-time data streaming pipeline for detecting volumetric bot attacks and API
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 
 - [Built With](#-built-with)
 - [Architecture & Workflow](#-architecture--workflow)
@@ -35,7 +35,7 @@ A real-time data streaming pipeline for detecting volumetric bot attacks and API
 
 ---
 
-## 🛠 Built With
+## Built With
 
 * **[Python](https://www.python.org/)** – Pipeline implementation, stream processing logic, and interface definitions.
 * **[Apache Kafka](https://kafka.apache.org/) (v3.7.0)** – Distributed message broker for high-throughput, low-latency log ingestion.
@@ -47,7 +47,7 @@ A real-time data streaming pipeline for detecting volumetric bot attacks and API
 
 ---
 
-## 🏗 Architecture & Workflow
+## Architecture & Workflow
 
 The architecture follows a decoupled stream-processing design separated into four primary layers:
 
@@ -87,7 +87,7 @@ The architecture follows a decoupled stream-processing design separated into fou
 
 ---
 
-## ✨ Features
+## Features
 
 - **Decoupled Stream Ingestion**: Reliable publish-subscribe architecture with Kafka handling event buffering and decoupling producers from consumer applications.
 - **Realistic Attack Simulation**: Emits normal client requests at steady intervals while probabilistically injecting burst traffic (20 rapid requests from `ATTACKER`).
@@ -100,7 +100,7 @@ The architecture follows a decoupled stream-processing design separated into fou
 
 ---
 
-## 🔍 How It Works
+## How It Works
 
 1. **Traffic Generation (`producer.py`)**:
    - Publishes access logs to the `api_logs` Kafka topic on `localhost:9092`.
@@ -124,7 +124,7 @@ The architecture follows a decoupled stream-processing design separated into fou
 
 ---
 
-## 🎯 Anomaly Detection Logic
+##  Anomaly Detection Logic
 
 The system utilizes **volumetric rate-thresholding** over bounded time intervals:
 
@@ -148,7 +148,7 @@ $$\text{Request Count}(IP)_{\Delta t = 5s} > 15 \implies \text{Raise Attack Aler
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 realtime-api-anomaly-detection/
@@ -166,7 +166,7 @@ realtime-api-anomaly-detection/
 
 ---
 
-## 🚀 Setup & Prerequisites
+##  Setup & Prerequisites
 
 ### Prerequisites
 * **Operating System**: Linux, macOS, or Windows with WSL
@@ -192,7 +192,7 @@ pip install -r requirements.txt
 
 ---
 
-## 💻 Execution Steps
+##  Execution Steps
 
 Run the following commands in separate terminal windows:
 
@@ -252,7 +252,7 @@ python gradio_app.py
 
 ---
 
-## 📋 Expected Output
+##  Expected Output
 
 ### Producer Console (`producer.py`)
 ```text
@@ -294,7 +294,7 @@ Batch: 1
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 > Place your screenshot images in the `screenshots/` directory to display them here.
 
@@ -343,7 +343,7 @@ Batch: 1
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - **Unsupervised Machine Learning**: Integrate Isolation Forest or Autoencoders in PySpark to catch subtle non-volumetric anomaly patterns.
 - **Event-Time Watermarking**: Implement Spark event-time watermarking to handle out-of-order logs and network delays cleanly.
@@ -353,12 +353,12 @@ Batch: 1
 
 ---
 
-## 👥 Contributors
+## Contributors
 
 - **Ananya** – *Project Author & Pipeline Developer*
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE) – feel free to use and adapt this project for educational and research purposes.
